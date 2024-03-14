@@ -33,6 +33,15 @@ pub struct WellKnownSubclassRegistration {
     pub registrar: String,
 }
 
+#[derive(Deserialize)]
+#[serde(rename_all = "kebab-case")]
+pub struct OtherSubclassProductInfo {
+    pub id: String,
+    pub internal_name: String,
+    pub public_name: String,
+    pub registrant: String,
+}
+
 pub fn internal_name_to_variant(x: &str) -> String {
     let mut output = String::new();
 
@@ -84,6 +93,17 @@ impl core::fmt::Display for WellKnownSubclassRegistration {
             self.public_name.escape_default(),
             self.specification.escape_default(),
             self.registrar.escape_default()
+        ))
+    }
+}
+
+impl core::fmt::Display for OtherSubclassProductInfo {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_fmt(format_args!(
+            "{}: 0x{}, \"{}\";",
+            internal_name_to_variant(&self.internal_name),
+            self.id,
+            self.public_name.escape_default()
         ))
     }
 }

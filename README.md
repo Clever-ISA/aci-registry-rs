@@ -10,6 +10,7 @@ The following crate features are provided:
 * `fixed-repr`: Causes each well-known subclass enum, [`DeviceClass`], [`DeviceVendor`], [`SubclassId`], and [`ProductId`] to all be represented as a native-endian `u16`,
  which is suitable for encoding/decoding for transport, specifically as the Device Class/Subclass and Device Vendor/Product fields
 * `extended-info`: Provides information that is generally unneeded by drivers or firmware for ACI Devices for well-known subclass enums, [`DeviceClass`], and [`DeviceVendor`]
+* `non-authorative`: Provides enums in the `non_authorative` module for known product ID and subclass ID registrations. 
 
 ## Use
 There are three primary uses for this crate:
@@ -21,10 +22,11 @@ To Faciliate the first two use cases, the crate is `no_std` and does not require
 
 ## Other Subclasses/Product Ids
 
-Presently, only the lists of devices, vendors, and well-known subclasses, maintained in the Clever-ISA project source copy of the [ACI-Registry](https://github.com/Clever-ISA/ACI-Registry)
- are exposed through strongly typed enumerations.
+Subclasses of non-well known classes, and Product IDs are provided in the `non_authorative` module, which is enabled by the `non-authorative` feature. 
 
-In the future, subclasses of non-well known classes, and product ids may be listed
+This information is not owned by the Clever-ISA Project, nor is its updates coordinated, so it's accuracy is not warrantied and the types are provided on an AS IS basis only. 
+
+Enums provided in the module are affected as usual by the `fixed-repr` and `extended-info` features.
 
 ## Out of Date Registries
 
@@ -36,7 +38,7 @@ It is considered a semver patch to update the copy of the registry associated wi
 
 ## License
 
-Copyright (C) 2024 Connor Horman
+Copyright (C) 2024 Clever-ISA Project
 
 This project is released under the terms of the Apache 2.0 or MIT License, at your option. 
 

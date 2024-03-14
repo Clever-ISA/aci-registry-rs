@@ -4,6 +4,9 @@
 
 mod tables;
 
+#[cfg(feature = "non-authorative")]
+pub mod non_authorative;
+
 pub use tables::*;
 
 /// Generic type for the subclasses of device classes.
