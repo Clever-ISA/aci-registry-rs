@@ -1,6 +1,6 @@
 [package]
 name = "aci-registry"
-version = "1.1.0"
+version = "1.1.1"
 edition = "2021"
 build = "build/main.rs"
 authors = ["Connor Horman <chorman64@gmail.com>"]
