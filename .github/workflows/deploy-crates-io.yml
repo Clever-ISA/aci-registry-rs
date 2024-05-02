@@ -25,7 +25,9 @@ jobs:
         cargo install cargo-bump
     - name: Update Package Version
       if: ${{!inputs.dry-run}}
-      run: cargo bump patch
+      run: |
+        cargo bump patch
+        git add Cargo.toml
     - name: Try Compile 
       run: cargo check
     - name: Commit Locally
