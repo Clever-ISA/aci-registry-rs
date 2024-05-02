@@ -18,7 +18,9 @@ jobs:
       with:
         submodules: true
     - name: Pull Submodules
-      run: git submodule update --remote
+      run: |
+        git submodule update --remote
+        git add ACI-Registry aci-tables
     - name: Install Rust Tools
       run: |
         rustup toolchain add stable --component rustc --component cargo
