@@ -23,10 +23,11 @@ jobs:
       run: |
         rustup toolchain add stable --component rustc --component cargo
         cargo install cargo-bump
-    - name: Update Package Version and compile-test the registry
-      run: |
-        cargo bump patch
-        cargo check
+    - name: Update Package Version
+      if: ${{!inputs.dry-run}}
+      run: cargo bump patch
+    - name: Try Compile 
+      run: cargo check
     - name: Commit Locally
       run: |
         git config user.name 'Clever-ISA Bot (Github Actions Automation)'
