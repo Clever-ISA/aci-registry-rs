@@ -41,7 +41,7 @@ jobs:
       run: cargo publish
       if: ${{!inputs.dry-run}}
       env:
-        CARGO_REPOSITRY_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
+        CARGO_REGISTRY_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
     - name: Push to github
       run: git push
 
