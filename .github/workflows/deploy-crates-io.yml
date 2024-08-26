@@ -30,7 +30,8 @@ jobs:
       run: |
         cargo bump patch
         git add Cargo.toml
-    - name: Try Compile 
+    - name: Try Compile
+      id: try_compile
       run: cargo check
     - name: Commit Locally
       run: |
@@ -40,9 +41,24 @@ jobs:
     - name: Publish to crates.io
       run: cargo publish
       if: ${{!inputs.dry-run}}
+      id: publish
       env:
         CARGO_REGISTRY_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
     - name: Push to github
       run: git push
+    - name: Notify Webhook
+      if: success() || failure()
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+        webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+        username: Clever-ISA Bot (Github Actions Automation)
+        avatar_url: https://avatars.githubusercontent.com/Clever-ISA-Bot?v=4
+        color: ${{ env.STATUS_COLOUR }}
+        message: "aci-registry (Rust Bindings) Update ${{ inputs.dry-run && '(dry run only)' || ''}}: ${{ env.STATUS_MESSAGE }}"
+      env:
+          STATUS_COLOUR: ${{ (steps.try_compile.outcome != 'failure' && steps.publish.outcome != 'failure') && '#0fe33e' || '#ff0000' }}
+          STATUS_MESSAGE: ${{ steps.try_compile.outcome == 'failure' && 'Package Build Failed' || (steps.publish.outcome == 'faliure' && 'Publish Failed' || 'Success')}}
+
 
     
